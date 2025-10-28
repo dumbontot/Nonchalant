@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>system alert</title>
+<style>
+  :root{
+    --bg:#0f1724; /* page background */
+    --card:#0b1220;
+    --muted:#99a0b3;
+    --accent:#ff6b9a; /* heart/pink */
+    --soft:#111827;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071027 0%, #071a2f 100%);display:flex;align-items:center;justify-content:center}
+  .window{
+    width:92%;
+    max-width:420px;
+    background:linear-gradient(180deg,#0b1220,#07101a);
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    padding:18px;
+    color:#e6eef8;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .title{
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  }
+  .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(180deg,#ff9db9,#ff6b9a);box-shadow:0 2px 6px rgba(255,107,154,0.12)}
+  .title h1{font-size:15px;margin:0;font-weight:600}
+  .body p{margin:0 0 14px 0;color:var(--muted);line-height:1.35}
+  .popup{
+    background:linear-gradient(180deg,#0f172a,#071224);
+    border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.03);
+  }
+  .question{font-weight:600;margin-bottom:8px}
+  .controls{display:flex;gap:10px;justify-content:center;margin-top:12px}
+  .btn{
+    padding:10px 14px;border-radius:10px;font-weight:600;border:0;cursor:pointer;
+    box-shadow:0 6px 14px rgba(2,6,23,0.45);
+    min-width:120px;
+  }
+  .yes{background:linear-gradient(180deg,#ff9db9,#ff6b9a);color:#0b1220}
+  .no{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+  .small{font-size:13px;color:var(--muted);text-align:center;margin-top:10px}
+  .result{margin-top:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center;display:none}
+  .actions{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .linkBtn{padding:8px 10px;border-radius:8px;border:0;background:#111827;color:#e6eef8;cursor:pointer}
+  .copied{font-size:12px;color:#9ee6b4;margin-top:8px}
+  @media(min-width:600px){ .window{max-width:460px} }
+</style>
+</head>
+<body>
+  <div class="window" role="dialog" aria-labelledby="title">
+    <div class="title">
+      <div class="dot" aria-hidden="true"></div>
+      <h1 id="title">system alert</h1>
+    </div>
+
+    <div class="body popup" id="popup">
+      <div class="question">possible feelings detected 💭</div>
+      <p>i might have developed feelings for you this hhn and i was wondering if you felt the same</p>
+
+      <div class="controls">
+        <button class="btn yes" id="yesBtn">yes</button>
+        <button class="btn no" id="noBtn">no, but we can stay as besties</button>
+      </div>
+
+      <div class="small">tap an option. the page will prepare a message you can send me on Telegram.</div>
+
+      <div class="result" id="result">
+        <div id="resultText"></div>
+
+        <div class="actions" id="actions">
+          <button class="linkBtn" id="openTelegram">Open Telegram to send</button>
+          <button class="linkBtn" id="copyText">Copy message</button>
+        </div>
+
+        <div style="text-align:center"><small class="copied" id="copiedMsg" style="display:none">Copied to clipboard ✅</small></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn  = document.getElementById('noBtn');
+  const result = document.getElementById('result');
+  const resultText = document.getElementById('resultText');
+  const openTelegram = document.getElementById('openTelegram');
+  const copyText = document.getElementById('copyText');
+  const copiedMsg = document.getElementById('copiedMsg');
+
+  // Customize these messages if you want
+  const yesMessage = "Yes, I think there could be something real. I'd like to try.";
+  const noMessage  = "No, I want to stay friends.";
+
+  function showResult(type){
+const msg = (type === 'yes') ? yesMessage : noMessage;
+    // friendly small animation step
+    resultText.innerHTML = "<strong>you selected:</strong><div style='margin-top:8px;font-weight:600'>"+msg+"</div>";
+    result.style.display = 'block';
+    copiedMsg.style.display = 'none';
+
+    // prepare telegram share link (prefills text in the Telegram share dialog)
+    const encodedText = encodeURIComponent(msg);
+    // Use t.me/share/url?text=... which opens Telegram share modal. Docs: core.telegram.org/widgets/share
+    const tgShare = "https://t.me/share/url?text=" + encodedText;
+
+    openTelegram.onclick = ()=> { window.open(tgShare, "_blank"); }
+    copyText.onclick = async ()=>{
+      try {
+        await navigator.clipboard.writeText(msg);
+        copiedMsg.style.display = 'block';
+        setTimeout(()=> copiedMsg.style.display = 'none', 2200);
+      } catch(e){
+        copiedMsg.textContent = "Could not copy automatically — long-press the text to copy.";
+        copiedMsg.style.display = 'block';
+        setTimeout(()=> copiedMsg.style.display = 'none', 3500);
+      }
+    };
+  }
+
+  yesBtn.addEventListener('click', ()=> showResult('yes'));
+  noBtn.addEventListener('click', ()=> showResult('no'));
+</script>
+</body>
+</html>
