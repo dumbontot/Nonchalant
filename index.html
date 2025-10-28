@@ -6,10 +6,10 @@
 <title>system alert</title>
 <style>
   :root{
-    --bg:#0f1724; /* page background */
+    --bg:#0f1724;
     --card:#0b1220;
     --muted:#99a0b3;
-    --accent:#ff6b9a; /* heart/pink */
+    --accent:#ff6b9a;
     --soft:#111827;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
   }
@@ -60,7 +60,7 @@
 
     <div class="body popup" id="popup">
       <div class="question">Possible feelings detected 💭</div>
-      <p>I don't want to ruin the friendship but I would never know if I don't ask. I would repect your decision either way but can I take you out on a date?</p>
+      <p>I don't want to ruin the friendship but I would never know if I don't ask. I would respect your decision either way but can I take you out on a date?</p>
 
       <div class="controls">
         <button class="btn yes" id="yesBtn">Yes</button>
@@ -91,24 +91,24 @@
   const copyText = document.getElementById('copyText');
   const copiedMsg = document.getElementById('copiedMsg');
 
-  // Customize these messages if you want
+  const telegramUser = "kencheng"; // your Telegram username
+
   const yesMessage = "Yes";
   const noMessage  = "No, I want to stay as friends.";
 
   function showResult(type){
-const msg = (type === 'yes') ? yesMessage : noMessage;
-    // friendly small animation step
-    resultText.innerHTML = "<strong>you selected:</strong><div style='margin-top:8px;font-weight:600'>"+msg+"</div>";
+    const msg = (type === 'yes') ? yesMessage : noMessage;
+
+    resultText.innerHTML = "<strong>you selected:</strong><div style='margin-top:8px;font-weight:600'>" + msg + "</div>";
     result.style.display = 'block';
     copiedMsg.style.display = 'none';
 
-    // prepare telegram share link (prefills text in the Telegram share dialog)
     const encodedText = encodeURIComponent(msg);
-    // Use t.me/share/url?text=... which opens Telegram share modal. Docs: core.telegram.org/widgets/share
-    const tgShare = "https://t.me/share/url?text=" + encodedText;
+    const tgLink = `https://t.me/${telegramUser}?text=${encodedText}`;
 
-    openTelegram.onclick = ()=> { window.open(tgShare, "_blank"); }
-    copyText.onclick = async ()=>{
+    openTelegram.onclick = ()=> { window.open(tgLink, "_blank"); }
+
+    copyText.onclick = async ()=> {
       try {
         await navigator.clipboard.writeText(msg);
         copiedMsg.style.display = 'block';
