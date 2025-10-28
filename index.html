@@ -13,7 +13,14 @@
     --soft:#111827;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
   }
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071027 0%, #071a2f 100%);display:flex;align-items:center;justify-content:center}
+  html,body{
+    height:100%;
+    margin:0;
+    background:linear-gradient(180deg,#071027 0%, #071a2f 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
   .window{
     width:92%;
     max-width:420px;
@@ -25,30 +32,105 @@
     border:1px solid rgba(255,255,255,0.03);
   }
   .title{
-    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
   }
-  .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(180deg,#ff9db9,#ff6b9a);box-shadow:0 2px 6px rgba(255,107,154,0.12)}
-  .title h1{font-size:15px;margin:0;font-weight:600}
-  .body p{margin:0 0 14px 0;color:var(--muted);line-height:1.35}
+  .dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:linear-gradient(180deg,#ff9db9,#ff6b9a);
+    box-shadow:0 2px 6px rgba(255,107,154,0.12);
+  }
+  .title h1{
+    font-size:15px;
+    margin:0;
+    font-weight:600;
+  }
+  .body p{
+    margin:0 0 14px 0;
+    color:var(--muted);
+    line-height:1.35;
+  }
   .popup{
     background:linear-gradient(180deg,#0f172a,#071224);
-    border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.03);
+    border-radius:10px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,0.03);
   }
-  .question{font-weight:600;margin-bottom:8px}
-  .controls{display:flex;gap:10px;justify-content:center;margin-top:12px}
+  .question{
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .controls{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:12px;
+  }
   .btn{
-    padding:10px 14px;border-radius:10px;font-weight:600;border:0;cursor:pointer;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:600;
+    border:0;
+    cursor:pointer;
     box-shadow:0 6px 14px rgba(2,6,23,0.45);
     min-width:120px;
   }
-  .yes{background:linear-gradient(180deg,#ff9db9,#ff6b9a);color:#0b1220}
-  .no{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-  .small{font-size:13px;color:var(--muted);text-align:center;margin-top:10px}
-  .result{margin-top:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center;display:none}
-  .actions{display:flex;gap:8px;justify-content:center;margin-top:12px}
-  .linkBtn{padding:8px 10px;border-radius:8px;border:0;background:#111827;color:#e6eef8;cursor:pointer}
-  .copied{font-size:12px;color:#9ee6b4;margin-top:8px}
-  @media(min-width:600px){ .window{max-width:460px} }
+  .yes{
+    background:linear-gradient(180deg,#ff9db9,#ff6b9a);
+    color:#0b1220;
+  }
+  .no{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--muted);
+  }
+  .small{
+    font-size:13px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:10px;
+  }
+  .result{
+    margin-top:12px;
+    padding:10px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.02);
+    text-align:center;
+    display:none;
+  }
+  .actions{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin-top:12px;
+  }
+  .linkBtn{
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.08);
+    background:#111827;
+    color:#e6eef8;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .linkBtn:hover{
+    border-color:rgba(255,255,255,0.15);
+    background:#1a2234;
+    transform:translateY(-1px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+  }
+  .copied{
+    font-size:12px;
+    color:#9ee6b4;
+    margin-top:8px;
+  }
+  @media(min-width:600px){
+    .window{max-width:460px}
+  }
 </style>
 </head>
 <body>
@@ -60,7 +142,7 @@
 
     <div class="body popup" id="popup">
       <div class="question">Possible feelings detected 💭</div>
-      <p>I don't want to ruin the friendship but I would never know if I don't ask. I would respect your decision either way but can I take you out on a date?</p>
+      <p>I may have caught feelings, do you feel the same?</p>
 
       <div class="controls">
         <button class="btn yes" id="yesBtn">Yes</button>
@@ -94,7 +176,7 @@
   const telegramUser = "kencheng"; // your Telegram username
 
   const yesMessage = "Yes";
-  const noMessage  = "No, I want to stay as friends.";
+  const noMessage  = "No, Let's be besties";
 
   function showResult(type){
     const msg = (type === 'yes') ? yesMessage : noMessage;
