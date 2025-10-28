@@ -59,15 +59,15 @@
     </div>
 
     <div class="body popup" id="popup">
-      <div class="question">possible feelings detected 💭</div>
-      <p>i might have developed feelings for you this hhn and i was wondering if you felt the same</p>
+      <div class="question">Possible feelings detected 💭</div>
+      <p>I don't want to ruin the friendship but I would never know if I don't ask. I would repect your decision either way but can I take you out on a date?</p>
 
       <div class="controls">
-        <button class="btn yes" id="yesBtn">yes</button>
-        <button class="btn no" id="noBtn">no, but we can stay as besties</button>
+        <button class="btn yes" id="yesBtn">Yes</button>
+        <button class="btn no" id="noBtn">No</button>
       </div>
 
-      <div class="small">tap an option. the page will prepare a message you can send me on Telegram.</div>
+      <div class="small">Tap an option. The page will prepare a message you can send me on Telegram.</div>
 
       <div class="result" id="result">
         <div id="resultText"></div>
@@ -92,8 +92,8 @@
   const copiedMsg = document.getElementById('copiedMsg');
 
   // Customize these messages if you want
-  const yesMessage = "Yes, I think there could be something real. I'd like to try.";
-  const noMessage  = "No, I want to stay friends.";
+  const yesMessage = "Yes, I would like to try.";
+  const noMessage  = "No, I want to stay as friends.";
 
   function showResult(type){
 const msg = (type === 'yes') ? yesMessage : noMessage;
